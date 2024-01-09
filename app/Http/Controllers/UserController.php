@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class UserController extends Controller
 {
@@ -33,16 +34,18 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        User::create($data);
-        return redirect()->route('user.index')->with('success', true);
+        $user = User::create($data);
+
+        return Response::json($user, 201)->header('Location', route('user.index'));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show($userid)
     {
-        return view ('admin.user.show', compact('user'));
+        $user= User::find(intval($userid));
+        return Response::json(['user'=>$user], 200)->header('Location', route('user.index'));
     }
 
     /**
@@ -57,12 +60,16 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $userid)
     {
+        
+        $user= User::find(intval($userid));
+        //dd($user);
         $data = $request->all();
+        //dd($data);
         $user->update($data);
 
-        return redirect()->route('user.index')->with('success', true);
+        return Response::json(['user'=>$user], 201)->header('Location', route('user.index'));
     }
 
     /**
