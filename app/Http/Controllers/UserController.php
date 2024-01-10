@@ -36,7 +36,7 @@ class UserController extends Controller
         $data = $request->all();
         $user = User::create($data);
 
-        return Response::json($user, 201)->header('Location', route('user.index'));
+        return Response::json(['user' => $user], 201)->header('Location', route('user.index'));
     }
 
     /**
@@ -75,10 +75,12 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy($userid)
     {
+        $user = User::find(intval($userid));
+
         $user->delete();
         
-        return redirect()->route('user.index')->with('success', true);
+        return Response::json([], 204)->header('Location', route('user.index'));
     }
 }
