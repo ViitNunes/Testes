@@ -28,14 +28,14 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    Route::get('/users', [UserController::class, 'index'])->name('user.index');
+    Route::get('/users/create', [UserController::class, 'create'])->name('user.create');
+    Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('user.edit');
+    Route::get('/users/{user}', [UserController::class, 'show'])->name('user.show');
+    Route::put('/users/{user}', [UserController::class, 'update'])->name('user.update');
+    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('user.destroy');
+    Route::post('/users', [UserController::class, 'store'])->name('user.store');
 });
 
-Route::get('/users', [UserController::class, 'index'])->name('user.index');
-Route::get('/users/create', [UserController::class, 'create'])->name('user.create');
-Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('user.edit');
-Route::get('/users/{user}', [UserController::class, 'show'])->name('user.show');
-Route::put('/users/{user}', [UserController::class, 'update'])->name('user.update');
-Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('user.destroy');
-Route::post('/users', [UserController::class, 'store'])->name('user.store');
 
 require __DIR__.'/auth.php';

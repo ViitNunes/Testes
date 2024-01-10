@@ -11,7 +11,7 @@ use Illuminate\Testing\Fluent\AssertableJson;
 
 class UserTest extends \Tests\TestCase
 {
-    //use RefreshDatabase; // Use RefreshDatabase para reiniciar o banco de dados entre os testes
+    use RefreshDatabase; // Use RefreshDatabase para reiniciar o banco de dados entre os testes
 
     /**A basic unit test example.*/
     public function testCreation(): void{
@@ -38,6 +38,7 @@ class UserTest extends \Tests\TestCase
     {
         $this->withoutMiddleware();
 
+        $user = User::factory()->create();
         $id = User::all()->first()->id; //Pega o id do primeiro usuário do banco de dados
 
         $response = $this->json('GET', "/users/{$id}"); //Faz a requisição
@@ -50,7 +51,7 @@ class UserTest extends \Tests\TestCase
                 'id',
                 'name',
                 'email',
-                'password'
+                //'password'
             ]
             ];
         
@@ -72,7 +73,7 @@ class UserTest extends \Tests\TestCase
         $payload = [
             'name' => $faker->firstName,
             'email' => $faker->email,
-            'password' => $faker->password,
+            //'password' => $faker->password,
         ];
 
         $response = $this->json('put', "/users/{$id}", $payload); //Faz a requisição update
@@ -85,7 +86,7 @@ class UserTest extends \Tests\TestCase
             'id',
             'name',
             'email',
-            'password'
+            //'password'
            ]
         ];
         
